@@ -1,0 +1,29 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "Регистрация";
+}
+<h1>@ViewData["Title"]</h1>
+<style>
+    .input-validation-error{
+        border-color:red;
+    }
+</style>
+<p>Введите ваши данные</p>
+<form asp-action="CreateUser" asp-controller="Registration" asp-antiforgery="true">
+    <div class="validation" asp-validation-summary="All">
+        <div>
+            <label asp-for="Login"></label>
+            <input type="text" asp-for="Login" />
+            <span asp-validation-for="Login" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Password"></label>
+            <input type="password" asp-for="Password" />
+            <span asp-validation-for="Password" class="text-danger"></span>
+        </div>
+        <div>
+            <input type="submit" value="Зарегистрироваться" />
+        </div>
+    </div>
+</form>
