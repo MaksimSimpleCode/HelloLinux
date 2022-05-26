@@ -1,6 +1,6 @@
 ﻿using HelloLinux.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using NLog;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -11,15 +11,15 @@ namespace HelloLinux.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private static Logger _logger = LogManager.GetLogger("Home_Logs");
+        public HomeController()
         {
-            _logger = logger;
+
         }
 
         public IActionResult Index()
         {
+            _logger.Info("Зашли на главную страницу Home");
             return View();
         }
 

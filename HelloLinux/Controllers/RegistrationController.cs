@@ -5,27 +5,33 @@ using System.Linq;
 using HelloLinux.Models;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using NLog;
 
 namespace HelloLinux.Controllers
 {
     public class RegistrationController:Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        public RegistrationController(ILogger<HomeController> logger)
+        private static Logger _logger = LogManager.GetLogger("Registration_Logs");
+
+        public RegistrationController()
         {
-            _logger = logger;
+            
         }
 
         public IActionResult Registration()
         {
+            _logger.Info("Мы зашли в Registration");
             return View();
         }
 
         public ViewResult CreateUser(User user)
         {
+            
             if (ModelState.IsValid)
             {
                 UserRepository.AddUser(user);
+
+                _logger.Info($"Пользователь: {user.Login} зарегестрировался");
                 return View("Thanks", user);
             }
             else
