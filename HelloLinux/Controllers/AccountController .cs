@@ -8,9 +8,11 @@ using Microsoft.Extensions.Logging;
 using NLog;
 using Microsoft.AspNetCore.Identity;
 using HelloLinux.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 
 namespace HelloLinux.Controllers
 {
+
     public class AccountController : Controller
     {
         private static Logger _logger = LogManager.GetLogger("Registration_Logs");
@@ -96,6 +98,12 @@ namespace HelloLinux.Controllers
             // удаляем аутентификационные куки
             await _signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
+        }
+
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
         }
 
     }

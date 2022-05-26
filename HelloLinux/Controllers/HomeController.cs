@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace HelloLinux.Controllers
 {
 
-   // [Authorize(Roles = "admin")]
+    [Authorize]
     public class HomeController : Controller
     {
         private static Logger _logger = LogManager.GetLogger("Home_Logs");
