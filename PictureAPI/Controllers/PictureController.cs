@@ -61,5 +61,19 @@ namespace PictureAPI.Controllers
                 return NotFound();
             return File(picture.PictureData, "image/jpeg");
         }
+
+        // Delete api/picture/delete/cf3d90d2-2b8d-4da9-8cf7-ab17d3e576e5
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult<Picture>> Delete(Guid id)
+        {
+            Picture picture = db.Pictures.FirstOrDefault(x => x.Id == id);
+            if (picture == null)
+            {
+                return NotFound();
+            }
+            db.Pictures.Remove(picture);
+            await db.SaveChangesAsync();
+            return Ok(picture);
+        }
     }
 }
