@@ -47,27 +47,31 @@
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Роли</a>
                             </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Pictures" asp-action="Index">Картинки</a>
+                            </li>
                         </ul>
                     </div>
                 }
 
             </div>
         </nav>
-    </header>
-    <div class="container">
-        <main role="main" class="pb-3">
-            @RenderBody()
+        <div style="text-align:right; width:90%">
             @if (User.Identity.IsAuthenticated)
             {
-                <div class="border-top" >
-                    <p>Зравстуй! @User.Identity.Name</p>
-
+                <div>
+                    <b><a nav-link text-dark>Зравстуй! @User.Identity.Name</a></b>
                     <form method="post" asp-controller="Account" asp-action="Logout">
                         <input type="submit" value="Выход" />
                     </form>
                 </div>
-                
             }
+        </div>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+           
         </main>
     </div>
 

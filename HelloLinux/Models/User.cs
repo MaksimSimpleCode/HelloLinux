@@ -7,13 +7,6 @@ using System.Threading.Tasks;
 
 namespace HelloLinux.Models
 {
-    //public class User
-    //{
-    //    [Required(ErrorMessage = "Пожалуйста, введите логин")]
-    //    public string Login { get; set; }
-    //    [Required(ErrorMessage = "Пожалуйста, введите пароль")]
-    //    public string Password { get; set; }
-    //}
     public class User : IdentityUser
     {
         public int Year { get; set; }

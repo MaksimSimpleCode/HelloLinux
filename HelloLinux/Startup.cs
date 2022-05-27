@@ -22,6 +22,9 @@ namespace HelloLinux
         
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<PictureContext>(options =>
+            options.UseSqlServer(Configuration.GetConnectionString("PictureConnection")));
+
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
             

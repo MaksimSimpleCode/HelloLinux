@@ -1,0 +1,36 @@
+﻿@model IEnumerable<Picture>
+
+
+@{
+    ViewBag.Title = "Добавление пользователя";
+}
+<div>
+    <h1>Что здесь происходит?</h1>
+    <p>На этой странице реализована возможность добовлять картинки в базу. В нижней части страницы, выводятся все картинки которые есть в базе на данный момент.</p>
+    <p>Пока что картинки сохраняются/достаются из локальной БД. В будущем этот функционал будет переопределен на удаленную БД. Так же будет создан API для доступа к случайным картинкам.
+    на подобие <a href="https://cataas.com/#/">вот этого сайта.</a></p>
+</div>
+<form asp-action="Create" asp-controller="Pictures" method="post" enctype="multipart/form-data">
+    <div class="validation" asp-validation-summary="ModelOnly"></div>
+    <div>
+        <p>
+            <label>Картинка</label>
+            <input name="Picture" type="file" class="form-control" />
+        </p>
+        <p>
+            <input type="submit" value="Добавить" />
+        </p>
+    </div>
+</form>
+
+<h3>Все картинки</h3>
+@foreach (var p in Model)
+{
+    <div>
+        <h4>@p.Name</h4>
+        @if (p.PictureData != null)
+        {
+            <img style='width:320px; height:300px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(p.PictureData))" />
+        }
+    </div>
+}
