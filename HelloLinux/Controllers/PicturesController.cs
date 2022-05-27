@@ -30,6 +30,7 @@ namespace HelloLinux.Controllers
         [HttpPost]
         public IActionResult Create(PictureViewModel model)
         {
+            //TODO добавить логгер
             if (ModelState.IsValid)
             {
                 Picture picture = new Picture();
