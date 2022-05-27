@@ -11,8 +11,15 @@ namespace HelloLinux
     {
         public static async Task InitializeAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
-            string adminEmail = "admin@gmail.com";
-            string password = "_Aa123456";
+            Dictionary<string, string> emailPassword = new Dictionary<string, string>()
+            {
+                { "admin@gmail.com","_Aa123456"},
+                { "test@mail.ru","qwerty" }
+            };
+           
+            //string adminEmail = "admin@gmail.com";
+            //string password = "_Aa123456";
+
             if (await roleManager.FindByNameAsync("admin") == null)
             {
                 await roleManager.CreateAsync(new IdentityRole("admin"));
@@ -21,15 +28,19 @@ namespace HelloLinux
             {
                 await roleManager.CreateAsync(new IdentityRole("employee"));
             }
-            if (await userManager.FindByNameAsync(adminEmail) == null)
+            foreach (var el in emailPassword)
             {
-                User admin = new User { Email = adminEmail, UserName = adminEmail };
-                IdentityResult result = await userManager.CreateAsync(admin, password);
-                if (result.Succeeded)
+                if (await userManager.FindByNameAsync(el.Key) == null)
                 {
-                    await userManager.AddToRoleAsync(admin, "admin");
+                    User user = new User { Email = el.Key, UserName = el.Key };
+                    IdentityResult result = await userManager.CreateAsync(user, el.Value);
+                    if (result.Succeeded)
+                    {
+                        await userManager.AddToRoleAsync(user, "admin");
+                    }
                 }
             }
+            
         }
     }
 }
