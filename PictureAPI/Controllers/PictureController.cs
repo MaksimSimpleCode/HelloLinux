@@ -1,6 +1,7 @@
 ﻿using HelloLinux.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NLog;
 using PictureAPI.Models;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace PictureAPI.Controllers
     [Route("api/[controller]")]
     public class PictureController : ControllerBase
     {
+        private static Logger _logger = LogManager.GetLogger("PictureController");
         PictureContext db;
 
         public PictureController(PictureContext context)
@@ -35,6 +37,7 @@ namespace PictureAPI.Controllers
 
                 contentResult.Add(File(picture.PictureData, "image/jpeg"));
             }
+            _logger.Debug($"Запросили все картинки");
             return contentResult;
         }
 
@@ -45,6 +48,7 @@ namespace PictureAPI.Controllers
             Picture picture = await db.Pictures.FirstOrDefaultAsync(x => x.Id == id);
             if (picture == null)
                 return NotFound();
+            _logger.Debug($"Запросили картинку: {picture.Id}");
             return File(picture.PictureData, "image/jpeg");
         }
 
@@ -59,6 +63,7 @@ namespace PictureAPI.Controllers
 
             if (picture == null)
                 return NotFound();
+            _logger.Debug($"Запросили случайную картинку {picture.Id}");
             return File(picture.PictureData, "image/jpeg");
         }
 
@@ -72,7 +77,9 @@ namespace PictureAPI.Controllers
                 return NotFound();
             }
             db.Pictures.Remove(picture);
+
             await db.SaveChangesAsync();
+            _logger.Debug($"Удалили картинку: {picture.Id}");
             return Ok(picture);
         }
     }
