@@ -13,6 +13,7 @@ namespace PictureAPI.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+
     public class PictureController : ControllerBase
     {
         private static Logger _logger = LogManager.GetLogger("PictureController");
@@ -22,6 +23,9 @@ namespace PictureAPI.Controllers
         {
             db = context;
         }
+
+        //TODO Реализовать метод добавления картинки
+        //Реализовать аутентификацию
 
         // GET api/picture/all
         [HttpGet]
