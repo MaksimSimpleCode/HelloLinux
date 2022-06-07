@@ -1,3 +1,4 @@
+using HelloLinux.Infrastructure;
 using HelloLinux.Models;
 using HelloLinux.Services;
 using Microsoft.AspNetCore.Builder;
@@ -6,9 +7,6 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System.IO;
 
 namespace HelloLinux
 {
@@ -28,7 +26,10 @@ namespace HelloLinux
 
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
-            
+
+            services.AddDbContext<ToDoContext>(options =>
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddIdentity<User, IdentityRole>(opts => {
                 opts.Password.RequiredLength = 5;   // минимальная длина
                 opts.Password.RequireNonAlphanumeric = false;   // требуются ли не алфавитно-цифровые символы
