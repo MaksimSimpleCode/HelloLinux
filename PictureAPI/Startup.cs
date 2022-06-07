@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-
 namespace PictureAPI
 {
     public class Startup
@@ -24,6 +23,7 @@ namespace PictureAPI
               options.UseSqlServer(Configuration.GetConnectionString("PictureConnection")));
 
             services.AddControllers(); // используем контроллеры без представлений
+            
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {

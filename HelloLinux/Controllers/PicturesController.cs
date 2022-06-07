@@ -1,8 +1,10 @@
 ﻿using HelloLinux.Models;
+using HelloLinux.Services;
 using HelloLinux.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,10 +18,13 @@ namespace HelloLinux.Controllers
     public class PicturesController : Controller
     {
         PictureContext db;
-
-        public PicturesController(PictureContext context)
+        UserManager<User> _userManager;
+        IUserRepository _userRepository;
+        public PicturesController(PictureContext context, UserManager<User> userManager, IUserRepository userRepository)
         {
             db = context;
+            _userManager = userManager;
+            _userRepository = userRepository;
         }
 
         public IActionResult Index()
@@ -30,6 +35,7 @@ namespace HelloLinux.Controllers
         [HttpPost]
         public IActionResult Create(PictureViewModel model)
         {
+            var userId = Guid.Parse(_userManager.GetUserId(this.User));
             //TODO добавить логгер
             if (ModelState.IsValid)
             {
@@ -47,6 +53,10 @@ namespace HelloLinux.Controllers
                     picture.PictureData = imageData;
                     picture.Name = model.Picture.FileName;
                     picture.CreatedOn = DateTime.Now;
+                    picture.Author = userId;
+
+                    _userRepository.AddScore(userId, 1);
+
                     db.Pictures.Add(picture);
                     db.SaveChanges();
                 }
