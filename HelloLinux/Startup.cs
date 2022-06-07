@@ -36,7 +36,8 @@ namespace HelloLinux
                 opts.Password.RequireUppercase = false; // требуются ли символы в верхнем регистре
                 opts.Password.RequireDigit = false; // требуются ли цифры
                 opts.User.RequireUniqueEmail = true;    // уникальный email
-                opts.User.AllowedUserNameCharacters = ".@abcdefghijklmnopqrstuvwxyz"; // допустимые символы
+                //opts.User.AllowedUserNameCharacters = ".@abcdefghijklmnopqrstuvwxyz"; // допустимые символы
+                opts.User.AllowedUserNameCharacters = null;
             })
                 .AddEntityFrameworkStores<ApplicationContext>();
             services.AddTransient<IUserRepository, UserService>();

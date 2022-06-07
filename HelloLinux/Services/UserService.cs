@@ -1,4 +1,5 @@
 ﻿using HelloLinux.Models;
+using HelloLinux.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,19 @@ namespace HelloLinux.Services
             if (user != null)
             {
                 user.Score += score;
+                _db.SaveChanges();
+            }
+        }
+
+        public void Edit(EditUserViewModel model)
+        {
+            User user = _db.Users.FirstOrDefault(user => user.Id == model.Id.ToString());
+            if (user != null)
+            {
+                user.Email = model.Email;
+                user.UserName = model.Name;
+                user.PhoneNumber = model.PhoneNumber;
+                user.Year = model.Year;
                 _db.SaveChanges();
             }
         }

@@ -1,4 +1,5 @@
 ﻿using HelloLinux.Models;
+using HelloLinux.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace HelloLinux.Services
     {
         void AddScore(Guid id, int score);
         IEnumerable<User> GetTopUsers(int count);
+
+        void Edit(EditUserViewModel model);
     }
 }
