@@ -20,7 +20,7 @@ namespace HelloLinux.Controllers
             _userManager = userManager;
         }
 
-
+        //TODO Поработать над фильтром записей
         public async Task<ActionResult> Index()
         {
             var userId = Guid.Parse(_userManager.GetUserId(this.User));
