@@ -14,5 +14,6 @@ namespace HelloLinux.Models
         [Column(TypeName = "image")]
         public byte[] PictureData { get; set; }
         public DateTime CreatedOn { get; set; }
+        public Guid Author { get; set; }
     }
 }

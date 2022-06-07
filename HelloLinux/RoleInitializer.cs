@@ -13,7 +13,7 @@ namespace HelloLinux
         {
             Dictionary<string, string> emailPassword = new Dictionary<string, string>()
             {
-                { "admin@gmail.com","_Aa123456"},
+                { "admin@gmail.com","qwerty"},   //_Aa123456
                 { "test@mail.ru","qwerty" }
             };
            

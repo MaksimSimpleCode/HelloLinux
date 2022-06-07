@@ -10,6 +10,7 @@ namespace HelloLinux.Models
     public class User : IdentityUser
     {
         public int Year { get; set; }
+        public int Score { get; set; }
     }
 
 }

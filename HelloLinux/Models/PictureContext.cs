@@ -8,7 +8,11 @@ namespace HelloLinux.Models
         public DbSet<Picture> Pictures { get; set; }
         public PictureContext(DbContextOptions<PictureContext> options): base(options)
         {
-            Database.EnsureCreated();
+            /*БД могу создать либо так либо применить миграцию на этот контекст (Update-Database -Context PictureContext)
+             * это в случае если я меняю базу, переезжаю и прочее, и мне нужно воссоздать все базы.
+             */
+
+            //Database.EnsureCreated(); 
         }
     }
 }

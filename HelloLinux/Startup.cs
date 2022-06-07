@@ -1,4 +1,5 @@
 using HelloLinux.Models;
+using HelloLinux.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -38,7 +39,7 @@ namespace HelloLinux
                 opts.User.AllowedUserNameCharacters = ".@abcdefghijklmnopqrstuvwxyz"; // допустимые символы
             })
                 .AddEntityFrameworkStores<ApplicationContext>();
-
+            services.AddTransient<IUserRepository, UserService>();
             services.AddControllersWithViews();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
