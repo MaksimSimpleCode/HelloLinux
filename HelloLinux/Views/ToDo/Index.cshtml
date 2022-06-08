@@ -4,7 +4,9 @@
     ViewData["Title"] = "Index";
 }
 
+
 <h1>Ваши заметки</h1>
+
 <div class="container">
     <main role="main" class="pb-3">
         @if (TempData["Sucess"] != null)
@@ -39,6 +41,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.ModifiedOn)
             </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Completed)
+            </th>
             <th></th>
         </tr>
     </thead>
@@ -58,8 +63,11 @@
                 @Html.DisplayFor(modelItem => item.ModifiedOn)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @Html.DisplayFor(modelItem => item.Completed)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id"><i class="bi bi-pencil" style="font-size: 1rem; color: turquoise;"></i></a>
+                <a asp-action="Delete" asp-route-id="@item.Id"><i class="bi bi-trash" style="font-size: 1rem; color: orangered;"></i></a>
             </td>
         </tr>
 }

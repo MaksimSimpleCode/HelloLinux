@@ -6,6 +6,7 @@
     <title>@ViewData["Title"] - HelloLinux</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.2/font/bootstrap-icons.css">
 </head>
 <body>
     <header>
@@ -66,17 +67,17 @@
 
             </div>
         </nav>
-        <div style="text-align:right; width:90%">
+
             @if (User.Identity.IsAuthenticated)
             {
-                <div>
-                    <b><a nav-link text-dark>Зравстуй! @User.Identity.Name</a></b>
+                <div style="text-align:right; width:95%">
+                    <p class="fst-italic">Зравстуй!<b>@User.Identity.Name</b></p>
                     <form method="post" asp-controller="Account" asp-action="Logout">
-                        <input type="submit" value="Выход" />
+                        <input type="submit" class="btn btn-primary" value="Выход" />
                     </form>
                 </div>
             }
-        </div>
+
     </header>
     <div class="container">
         <main role="main" class="pb-3">

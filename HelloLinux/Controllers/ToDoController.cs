@@ -1,5 +1,6 @@
 ﻿using HelloLinux.Infrastructure;
 using HelloLinux.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace HelloLinux.Controllers
 {
+    [Authorize]
     public class ToDoController : Controller
     {
         private readonly ToDoContext _db;

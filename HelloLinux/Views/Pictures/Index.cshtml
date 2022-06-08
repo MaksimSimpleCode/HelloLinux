@@ -7,8 +7,10 @@
 <div>
     <h1>Что здесь происходит?</h1>
     <p>На этой странице реализована возможность добовлять картинки в базу. В нижней части страницы, выводятся все картинки которые есть в базе на данный момент.</p>
-    <p>Пока что картинки сохраняются/достаются из локальной БД. В будущем этот функционал будет переопределен на удаленную БД. Так же будет создан API для доступа к случайным картинкам.
-    на подобие <a href="https://cataas.com/#/">вот этого сайта.</a></p>
+    <p>
+        Пока что картинки сохраняются/достаются из локальной БД. В будущем этот функционал будет переопределен на удаленную БД. Так же будет создан API для доступа к случайным картинкам.
+        на подобие <a href="https://cataas.com/#/">вот этого сайта.</a>
+    </p>
     <p><b>27.05.22 Update.</b></p>
     <p>
         Сделал стартовый API, пока что запускается одновременно с этим проектом. Доступны следующие методы:
@@ -16,7 +18,8 @@
             <li>Взять рандомную картинку: https://localhost:44316/api/picture/random <a target="_blank" href="https://localhost:44316/api/picture/random">тык</a> </li>
             <li>Взять определенную картинку  по Id: https://localhost:44316/api/picture/{id} <a target="_blank" href="https://localhost:44316/api/picture/">тык</a> </li>
             <li>Получить все картинки в Json: https://localhost:44316/api/picture/all <a target="_blank" href="https://localhost:44316/api/picture/all">тык</a> </li>
-            <li>Удалить определенную картинку по Id: https://localhost:44316/api/picture/delete/{id} <a target="_blank" href="https://localhost:44316/api/picture/delete/">тык</a>
+            <li>
+                Удалить определенную картинку по Id: https://localhost:44316/api/picture/delete/{id} <a target="_blank" href="https://localhost:44316/api/picture/delete/">тык</a>
                 <br>*Можно удалить только методом Delete, так что из браузера вряд ли получится.
             </li>
         </ul>
@@ -35,14 +38,47 @@
 </form>
 
 <h3>Все картинки</h3>
-@foreach (var p in Model)
+<h4>Всего: @Model.Count()</h4>
+<!--foreach (var p in Model)
 {
-<div>
-    <h4>Название: @p.Name</h4>
-    <h4>Id: @p.Id</h4>
-    @if (p.PictureData != null)
-    {
-        <img style='width:320px; height:300px;' src="data:image/jpeg;base64,@(Convert.ToBase64String(p.PictureData))" />
-    }
-</div>
+    <div>
+        <h4>Название: p.Name</h4>
+        <h4>Id: p.Id</h4>
+        if (p.PictureData != null)
+        {
+            <img style='width:320px; height:300px;' src="data:image/jpeg;base64,(Convert.ToBase64String(p.PictureData))" />
+        }
+    </div>
 }
+    -->
+<div id="carouselControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active" data-interval="3000">
+            <img class="d-block w-100" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.First().PictureData))" />
+                <!-- <div class="carousel-caption d-none d-md-block" style="color:red">
+                <h5>Model.First().Name</h5>
+                <p>Model.First().Id</p>
+                </div> -->
+        </div>
+
+        @foreach (var p in Model.Skip(1))
+        {
+            @if (p.PictureData != null)
+            {
+                <div class="carousel-item" data-interval="2000">
+                    <img class="d-block w-100" src="data:image/jpeg;base64,@(Convert.ToBase64String(p.PictureData))" />
+                        <!-- <div class="carousel-caption d-none d-md-block" style="color:red" >
+                                    <h5>p.Name</h5>
+                                    <p>p.Id</p>
+                         </div>-->
+                </div>
+            }
+        }
+    </div>
+    <a class="carousel-control-prev" role="button" href="#carouselControls" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" role="button" href="#carouselControls" data-slide="next">
+        <span class="carousel-control-next-icon" col></span>
+    </a>
+</div>
