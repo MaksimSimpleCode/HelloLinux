@@ -1,0 +1,43 @@
+﻿@model User
+<div class="container">
+    <main role="main" class="pb-3">
+        <p>Это личный кабинет,здесь можно будет просматривать личную информацию, редактировать ее, перемещатся между разделами и прочее.</p>
+        <p>На базавом этапе реализую вывод данных и возможность их редактирования</p>
+
+      
+        <div>
+            <p><b>Id:</b><br></p>
+            <label> @Model.Id</label>
+            <p><b>Количество очков:</b></p>
+            <label>@Model.Score</label>
+
+
+
+            <form asp-action="EditPersonalData" asp-controller="Account">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <input type="hidden" asp-for="Id" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="UserName" class="control-label">Имя</label>
+                    <input type="text" name="Name" value="@Model.UserName" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="PhoneNumber" class="control-label">Номер телефона</label>
+                    <input type="text" asp-for="PhoneNumber" value="@Model.PhoneNumber" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Email" class="control-label">Email</label>
+                    <input type="text" asp-for="Email" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Year" class="control-label">Год рождения</label>
+                    <input type="number" asp-for="Year" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Сохранить" class="btn btn-outline-secondary" />
+                </div>
+            </form>
+        </div>
+    </main>
+</div>

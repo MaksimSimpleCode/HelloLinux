@@ -1,0 +1,44 @@
+﻿@model HelloLinux.Models.ToDoList
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Редактирование</h1>
+
+<div class="form-group">
+    <input type="hidden" asp-for="Id" />
+</div>
+
+<hr />
+
+    <div class="">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <input type="hidden" asp-for="CreatedOn" />
+            <input type="hidden" asp-for="UserId" />
+            <div>
+                <input asp-for="Content" class="form-control" />
+                <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-check">
+
+                <input asp-for="Completed" type="checkbox" class="form-check-input" id="flexCheckChecked" />
+                <label class="form-check-label" for="flexCheckChecked">Выполнено</label>
+            </div>
+                 
+               <div>
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+             </div>
+        </form>
+    </div>
+
+
+<div>
+    <a asp-action="Index">Вернуться к заметкам</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

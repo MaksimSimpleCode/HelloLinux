@@ -9,6 +9,7 @@ using NLog;
 using Microsoft.AspNetCore.Identity;
 using HelloLinux.ViewModels;
 using Microsoft.AspNetCore.Authorization;
+using HelloLinux.Services;
 
 namespace HelloLinux.Controllers
 {
@@ -19,10 +20,12 @@ namespace HelloLinux.Controllers
 
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        private readonly IUserRepository _userRepository;
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, IUserRepository userRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _userRepository = userRepository;
         }
 
         
@@ -36,6 +39,46 @@ namespace HelloLinux.Controllers
         public IActionResult Login(string returnUrl = null)
         {
             return View(new LoginViewModel { ReturnUrl = returnUrl });
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> PersonalArea()
+        {
+            var user = await _userManager.GetUserAsync(this.User);
+            return View(user);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditPersonalData(EditUserViewModel model)
+        {
+            //1 Сопсоб
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(this.User);
+                user.UserName = model.Name;
+                user.PhoneNumber = model.PhoneNumber;
+                user.Email = model.Email;
+                user.Year = model.Year;
+
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("PersonalArea", "Account");
+                }
+                else
+                {
+                    foreach (var error in result.Errors)
+                    {
+                        _logger.Error(error.Description);
+                        ModelState.AddModelError(string.Empty, error.Description);
+                    }
+                }
+            }
+            return NoContent();
+            
+            //2 Способ
+            // _userRepository.Edit(model);
+            // return RedirectToAction("PersonalArea", "Account");
+
         }
 
         [HttpPost]
@@ -69,8 +112,7 @@ namespace HelloLinux.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result =
-                    await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
+                var result =await _signInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, false);
                 if (result.Succeeded)
                 {
                     // проверяем, принадлежит ли URL приложению

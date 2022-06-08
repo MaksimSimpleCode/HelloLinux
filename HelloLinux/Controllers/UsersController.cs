@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace HelloLinux.Controllers
 {
-    [Authorize(Roles = "admin")]
+    [Authorize]
     public class UsersController : Controller
     {
         UserManager<User> _userManager;
