@@ -9,7 +9,6 @@ namespace HelloLinux.Infrastructure
     {
         public ApplicationContext(DbContextOptions<ApplicationContext> options): base(options)
         {
-            //Database.EnsureCreated();
         }
     }
 }
