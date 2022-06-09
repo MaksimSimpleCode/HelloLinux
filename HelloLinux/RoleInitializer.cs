@@ -1,4 +1,5 @@
-﻿using HelloLinux.Models;
+﻿using HelloLinux.Infrastructure;
+using HelloLinux.Models;
 using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace HelloLinux
 {
     public class RoleInitializer
     {
+
         public static async Task InitializeAsync(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             Dictionary<string, string> emailPassword = new Dictionary<string, string>()
@@ -16,7 +18,7 @@ namespace HelloLinux
                 { "admin@gmail.com","qwerty"},   //_Aa123456
                 { "test@mail.ru","qwerty" }
             };
-           
+
             //string adminEmail = "admin@gmail.com";
             //string password = "_Aa123456";
 

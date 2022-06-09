@@ -12,8 +12,7 @@ namespace HelloLinux.Infrastructure
         public DbSet<ToDoList> ToDoList { get; set; }
         public ToDoContext(DbContextOptions<ToDoContext> options):base(options)
         {
+           // Database.EnsureCreated();
         }
-
-        
     }
 }
