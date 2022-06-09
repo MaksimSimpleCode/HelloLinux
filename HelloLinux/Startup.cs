@@ -22,7 +22,7 @@ namespace HelloLinux
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<PictureContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("PictureConnection")));
+            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDbContext<ApplicationContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
@@ -46,7 +46,13 @@ namespace HelloLinux
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
+            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
+            {
+                var pictureContext = serviceScope.ServiceProvider.GetRequiredService<PictureContext>();
+                var toDoContext = serviceScope.ServiceProvider.GetRequiredService<ToDoContext>();
+                pictureContext.Database.Migrate();
+                toDoContext.Database.Migrate();
+            }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();

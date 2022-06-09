@@ -13,7 +13,5 @@ namespace HelloLinux.Infrastructure
         public ToDoContext(DbContextOptions<ToDoContext> options):base(options)
         {
         }
-
-        
     }
 }

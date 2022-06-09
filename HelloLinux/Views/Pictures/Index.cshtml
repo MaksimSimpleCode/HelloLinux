@@ -37,8 +37,45 @@
     </div>
 </form>
 
+@if (Model.Count() != 0)
+{
 <h3>Все картинки</h3>
 <h4>Всего: @Model.Count()</h4>
+
+<div id="carouselControls" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active" data-interval="3000">
+            <img class="d-block w-100" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.First().PictureData))" />
+            <!-- <div class="carousel-caption d-none d-md-block" style="color:red">
+            <h5>Model.First().Name</h5>
+            <p>Model.First().Id</p>
+            </div> -->
+        </div>
+
+        @foreach (var p in Model.Skip(1))
+        {
+        @if (p.PictureData != null)
+            {
+        <div class="carousel-item" data-interval="2000">
+            <img class="d-block w-100" src="data:image/jpeg;base64,@(Convert.ToBase64String(p.PictureData))" />
+            <!-- <div class="carousel-caption d-none d-md-block" style="color:red" >
+                        <h5>p.Name</h5>
+                        <p>p.Id</p>
+             </div>-->
+        </div>
+            }
+        }
+    </div>
+    <a class="carousel-control-prev" role="button" href="#carouselControls" data-slide="prev">
+        <span class="carousel-control-prev-icon"></span>
+    </a>
+    <a class="carousel-control-next" role="button" href="#carouselControls" data-slide="next">
+        <span class="carousel-control-next-icon" col></span>
+    </a>
+</div>
+}
+
+
 <!--foreach (var p in Model)
 {
     <div>
@@ -51,34 +88,3 @@
     </div>
 }
     -->
-<div id="carouselControls" class="carousel slide" data-ride="carousel">
-    <div class="carousel-inner">
-        <div class="carousel-item active" data-interval="3000">
-            <img class="d-block w-100" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.First().PictureData))" />
-                <!-- <div class="carousel-caption d-none d-md-block" style="color:red">
-                <h5>Model.First().Name</h5>
-                <p>Model.First().Id</p>
-                </div> -->
-        </div>
-
-        @foreach (var p in Model.Skip(1))
-        {
-            @if (p.PictureData != null)
-            {
-                <div class="carousel-item" data-interval="2000">
-                    <img class="d-block w-100" src="data:image/jpeg;base64,@(Convert.ToBase64String(p.PictureData))" />
-                        <!-- <div class="carousel-caption d-none d-md-block" style="color:red" >
-                                    <h5>p.Name</h5>
-                                    <p>p.Id</p>
-                         </div>-->
-                </div>
-            }
-        }
-    </div>
-    <a class="carousel-control-prev" role="button" href="#carouselControls" data-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-    </a>
-    <a class="carousel-control-next" role="button" href="#carouselControls" data-slide="next">
-        <span class="carousel-control-next-icon" col></span>
-    </a>
-</div>

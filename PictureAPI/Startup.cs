@@ -20,7 +20,7 @@ namespace PictureAPI
 
 
             services.AddDbContext<PictureContext>(options =>
-              options.UseSqlServer(Configuration.GetConnectionString("PictureConnection")));
+              options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers(); // используем контроллеры без представлений
             

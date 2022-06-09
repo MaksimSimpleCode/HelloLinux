@@ -1,6 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using HelloLinux.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace HelloLinux.Models
+namespace HelloLinux.Infrastructure
 {
     public class PictureContext: DbContext
     {
@@ -12,7 +13,7 @@ namespace HelloLinux.Models
              * это в случае если я меняю базу, переезжаю и прочее, и мне нужно воссоздать все базы.
              */
 
-            //Database.EnsureCreated(); 
+           // Database.EnsureCreated(); 
         }
     }
 }
