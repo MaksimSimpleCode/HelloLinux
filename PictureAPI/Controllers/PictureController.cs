@@ -27,6 +27,17 @@ namespace PictureAPI.Controllers
         //TODO Реализовать метод добавления картинки
         //Реализовать аутентификацию
 
+
+        /// <summary>
+        /// Get all pictures
+        /// </summary>
+        /// <remarks>
+        /// remark...
+        /// </remarks>
+        /// <param>No</param>
+        /// <returns>Returns array</returns>
+        /// <response code="200">Success</response>
+        /// <response code="401">No succes</response>
         // GET api/picture/all
         [HttpGet]
         [Route("all")]

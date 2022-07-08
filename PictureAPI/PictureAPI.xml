@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PictureAPI</name>
+    </assembly>
+    <members>
+        <member name="M:PictureAPI.Controllers.PictureController.Get">
+            <summary>
+            Get all pictures
+            </summary>
+            <remarks>
+            remark...
+            </remarks>
+            <param>No</param>
+            <returns>Returns array</returns>
+            <response code="200">Success</response>
+            <response code="401">No succes</response>
+        </member>
+    </members>
+</doc>
