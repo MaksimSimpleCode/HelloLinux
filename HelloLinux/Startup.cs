@@ -22,13 +22,16 @@ namespace HelloLinux
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<PictureContext>(options =>
-            options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(Configuration.GetConnectionString("PostgreConnection")));
 
             services.AddDbContext<ApplicationContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(Configuration.GetConnectionString("PostgreConnection")));
 
             services.AddDbContext<ToDoContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseNpgsql(Configuration.GetConnectionString("PostgreConnection"))); 
+            
+            services.AddDbContext<PostContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("PostgreConnection")));
 
             services.AddIdentity<User, IdentityRole>(opts => {
                 opts.Password.RequiredLength = 5;   // минимальная длина
@@ -48,10 +51,14 @@ namespace HelloLinux
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
+                var appContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationContext>();
                 var pictureContext = serviceScope.ServiceProvider.GetRequiredService<PictureContext>();
                 var toDoContext = serviceScope.ServiceProvider.GetRequiredService<ToDoContext>();
+                var postContext = serviceScope.ServiceProvider.GetRequiredService<PostContext>();
                 pictureContext.Database.Migrate();
                 toDoContext.Database.Migrate();
+                appContext.Database.Migrate();
+                postContext.Database.Migrate();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();

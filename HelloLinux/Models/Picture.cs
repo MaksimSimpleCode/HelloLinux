@@ -11,7 +11,7 @@ namespace HelloLinux.Models
         public Guid Id { get; set; }
         public string Name { get; set; }
         public string Format { get; set; }
-        [Column(TypeName = "image")]
+        [Column(TypeName = "bytea")]
         public byte[] PictureData { get; set; }
         public DateTime CreatedOn { get; set; }
         public Guid Author { get; set; }

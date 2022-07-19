@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.OpenApi.Models;
+using System.IO;
 
 namespace PictureAPI
 {
@@ -23,13 +25,26 @@ namespace PictureAPI
               options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddControllers(); // используем контроллеры без представлений
+
+            services.AddSwaggerGen(c=>
+            {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SwaggerApi", Version = "v1" });
+                var filePath = Path.Combine(System.AppContext.BaseDirectory, "PictureAPI.xml");
+                c.IncludeXmlComments(filePath);
+            });
             
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
 
             app.UseDeveloperExceptionPage();
+            app.UseSwagger();
+            app.UseSwaggerUI(config =>
+            {
+                config.RoutePrefix = string.Empty;
+                config.SwaggerEndpoint("swagger/v1/swagger.json", "Test API");
 
+            });
 
             app.UseHttpsRedirection();
 
