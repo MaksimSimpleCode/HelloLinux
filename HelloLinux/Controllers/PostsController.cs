@@ -160,7 +160,7 @@ namespace HelloLinux.Controllers
 
         // POST /post/Edit
         [HttpPost]
-     //   [ValidateAntiForgeryToken]
+        //   [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Post post)
         {
             if (ModelState.IsValid)
@@ -174,6 +174,25 @@ namespace HelloLinux.Controllers
                 return RedirectToAction("Index");
             }
             return View(post);
+        }
+
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            var userId = Guid.Parse(_userManager.GetUserId(this.User));
+            Post post = await _db.Posts.FindAsync(id);
+            if (post.AuthorId != userId)
+            {
+                TempData["Error"] = "Доступ запрещен!";
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                _db.Posts.Remove(post);
+                await _db.SaveChangesAsync();
+
+                TempData["Sucess"] = "Пост удален!";
+                return RedirectToAction("Index");
+            }
         }
 
 
@@ -192,6 +211,48 @@ namespace HelloLinux.Controllers
 
             InsidePostViewModel model = new InsidePostViewModel { Post = post, Comments = comments };
             return View(model);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Like(Guid id)
+        {
+            var userId = Guid.Parse(_userManager.GetUserId(this.User));
+            Post post = await _db.Posts.FindAsync(id);
+
+            //if (post.AuthorId != userId)
+            //{
+            //    TempData["Error"] = "Доступ запрещен!";
+            //    return RedirectToAction("Index");
+            //}
+
+            var recordLike = _db.PostLikesStores.Where(s => s.PostId == id && s.AuthorID == userId).FirstOrDefault();
+            if (recordLike == null)
+            {
+                await _db.PostLikesStores.AddAsync(new PostLikesStore { AuthorID = userId, Id = Guid.NewGuid(), Like = true, PostId = post.Id });
+                post.Likes++;
+                _db.Posts.Update(post);
+                await _db.SaveChangesAsync();
+                return RedirectToAction("Index");
+            }
+            bool isLike = recordLike.Like;
+            if (!isLike)
+            {
+                recordLike.Like = true;
+                post.Likes++;
+            }
+            else
+            {
+                recordLike.Like = false;
+                if (post.Likes > 0)
+                {
+                    post.Likes--;
+                }
+            }
+            _db.PostLikesStores.Update(recordLike);
+            _db.Posts.Update(post);
+            await _db.SaveChangesAsync();
+
+            return RedirectToAction("Index");
         }
     }
 }

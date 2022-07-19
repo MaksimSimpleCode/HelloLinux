@@ -17,6 +17,7 @@
         {
             <div>
                 <a asp-action="Edit" asp-controller="Posts" asp-route-id="@post.Id"><i class="bi bi-pencil" style="font-size: 1rem; color: turquoise;"></i></a>
+                <a asp-action="Delete" asp-route-id="@post.Id"><i class="bi bi-trash" style="font-size: 1rem; color: orangered;"></i></a>
                 <h2>@post.Title</h2>
                 <div>
                     <span>Автор: @post.AuthorName</span><br>

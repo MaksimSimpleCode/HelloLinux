@@ -29,7 +29,7 @@
         @foreach (var post in Model)
         {
             <div>
-               <a asp-action="InsidePost" asp-controller="Posts" asp-route-id="@post.Id"><h2>@post.Title</h2></a> 
+                <a asp-action="InsidePost" asp-controller="Posts" asp-route-id="@post.Id"><h2>@post.Title</h2></a>
                 <div>
                     <span>Автор: <b>@post.AuthorName</b> </span><br>
                     <span>Дата: @post.CreatedOn</span>
@@ -38,7 +38,7 @@
                     <p>@post.Content</p>
                 </div>
                 <div>
-                    Лайки: @post.Likes
+                    <a asp-action="Like" asp-controller="Posts" asp-route-id="@post.Id"> <i class="bi bi-heart-fill"></i> @post.Likes</a>
                 </div>
             </div>
         }
