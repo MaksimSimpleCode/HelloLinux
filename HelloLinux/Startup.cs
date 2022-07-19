@@ -28,6 +28,9 @@ namespace HelloLinux
                 options.UseNpgsql(Configuration.GetConnectionString("PostgreConnection")));
 
             services.AddDbContext<ToDoContext>(options =>
+                options.UseNpgsql(Configuration.GetConnectionString("PostgreConnection"))); 
+            
+            services.AddDbContext<PostContext>(options =>
                 options.UseNpgsql(Configuration.GetConnectionString("PostgreConnection")));
 
             services.AddIdentity<User, IdentityRole>(opts => {
@@ -51,8 +54,11 @@ namespace HelloLinux
                 var appContext = serviceScope.ServiceProvider.GetRequiredService<ApplicationContext>();
                 var pictureContext = serviceScope.ServiceProvider.GetRequiredService<PictureContext>();
                 var toDoContext = serviceScope.ServiceProvider.GetRequiredService<ToDoContext>();
+                var postContext = serviceScope.ServiceProvider.GetRequiredService<PostContext>();
                 pictureContext.Database.Migrate();
                 toDoContext.Database.Migrate();
+                appContext.Database.Migrate();
+                postContext.Database.Migrate();
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
