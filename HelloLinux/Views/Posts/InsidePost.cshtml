@@ -1,0 +1,49 @@
+﻿@model InsidePostViewModel
+
+@{
+    ViewData["Title"] = "Inside Post";
+}
+
+<div>
+    <a asp-action="Index">Вернуться к постам</a>
+</div>
+
+<div>
+    <a asp-action="AddComment">Добавить комментарий</a>
+</div>
+
+<div class="container">
+    <main role="main" class="pb-3">
+        <div>
+            <h2>@Model.Post.Title</h2>
+            <div>
+                <span>Автор: @Model.Post.AuthorId</span><br>
+                <span>Дата: @Model.Post.CreatedOn</span>
+            </div>
+            <div>
+                <p>@Model.Post.Content</p>
+            </div>
+            <div>
+                Лайки: @Model.Post.Likes
+            </div>
+        </div>
+        <div>
+
+            <h1>Комментарии:</h1>
+            @foreach (var item in Model.Comments)
+            {
+                <div>
+                    Автор коммента: @item.AuthorId
+                </div>
+                <div>
+                    Коммент: @item.Content
+                </div>
+                <div>
+                    Лайки: @item.Likes
+                </div>
+            }
+        </div>
+
+    </main>
+</div>
+

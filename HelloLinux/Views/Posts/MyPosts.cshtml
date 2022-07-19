@@ -1,0 +1,35 @@
+﻿@model IEnumerable<HelloLinux.ViewModels.PostsViewModel>
+
+@{
+    ViewData["Title"] = "MyPosts";
+}
+
+
+<h1>Мои посты:</h1>
+
+<div>
+    <a asp-action="Index">Вернуться к постам</a>
+</div>
+
+<div class="container">
+    <main role="main" class="pb-3">
+        @foreach (var post in Model)
+        {
+            <div>
+                <a asp-action="Edit" asp-controller="Posts" asp-route-id="@post.Id"><i class="bi bi-pencil" style="font-size: 1rem; color: turquoise;"></i></a>
+                <h2>@post.Title</h2>
+                <div>
+                    <span>Автор: @post.AuthorName</span><br>
+                    <span>Дата: @post.CreatedOn</span>
+                </div>
+                <div>
+                    <p>@post.Content</p>
+                </div>
+                <div>
+                    Лайки: @post.Likes
+                </div>
+            </div>
+        }
+    </main>
+</div>
+
