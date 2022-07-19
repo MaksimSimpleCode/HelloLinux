@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 
 namespace HelloLinux.Controllers
 {
-    //  [Authorize]
+    [Authorize]
     public class PostsController : Controller
     {
         private static Logger _logger = LogManager.GetLogger("Post_Logs");
@@ -91,7 +91,7 @@ namespace HelloLinux.Controllers
 
         // GET /post/create
         [HttpPost]
-        // [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreatePostViewModel model)
         {
             var userId = Guid.Parse(_userManager.GetUserId(this.User));
@@ -160,7 +160,7 @@ namespace HelloLinux.Controllers
 
         // POST /post/Edit
         [HttpPost]
-        //   [ValidateAntiForgeryToken]
+        [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit(Post post)
         {
             if (ModelState.IsValid)
@@ -219,12 +219,6 @@ namespace HelloLinux.Controllers
             var userId = Guid.Parse(_userManager.GetUserId(this.User));
             Post post = await _db.Posts.FindAsync(id);
 
-            //if (post.AuthorId != userId)
-            //{
-            //    TempData["Error"] = "Доступ запрещен!";
-            //    return RedirectToAction("Index");
-            //}
-
             var recordLike = _db.PostLikesStores.Where(s => s.PostId == id && s.AuthorID == userId).FirstOrDefault();
             if (recordLike == null)
             {
@@ -254,5 +248,7 @@ namespace HelloLinux.Controllers
 
             return RedirectToAction("Index");
         }
+
+        //TODO AddComment
     }
 }
